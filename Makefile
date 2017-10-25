@@ -3,11 +3,11 @@ OBJS = $(SRC:.cpp=.o)
 DEPS = variables.h
 CXX = g++
 DEBUG = -g
-CXXFLAGS = -Wall -c $(DEBUG) -std=c++0x
+CXXFLAGS = -Wall -c $(DEBUG) -std=c++11
 LFLAGS = $(DEBUG) -O2 -Wall 
 
-GSD : $(OBJS)
-	$(CXX) -o GSD $(OBJS) $(LFLAGS)
+THERM : $(OBJS)
+	$(CXX) -o THERM $(OBJS) $(LFLAGS)
 
 gsd.o : $(DEPS) gsd.h  gsd_fn.cpp
 	$(CXX) $(CXXFLAGS) gsd_fn.cpp
@@ -22,5 +22,5 @@ main.o : $(DEPS) gsd.h gsd_read.h analyze.h main.cpp
 	$(CXX) $(CXXFLAGS) main.cpp
 
 clean:
-	\rm *.o *~ GSD
+	\rm *.o *~ THERM
 

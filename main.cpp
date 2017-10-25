@@ -17,7 +17,7 @@ int main(int argc, char **argv)
   double slider_thermal=0;
   int NX,NY,RUN;
   double KAPPA;
-  int STEPS;
+  int STEPS,FRAMES;
 
    switch (argc){
      case 6:
@@ -32,6 +32,7 @@ int main(int argc, char **argv)
            argv[0]);
    }
 
+  FRAMES=STEPS/PERIOD;
 
   // Init_strip.gsd filepath
   sprintf(init_strip,"../Sim_dump_ribbon/init_strip_L%d_W%d.gsd",NX,NY);

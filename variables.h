@@ -1,7 +1,7 @@
 //#define KAPPA 5.0
 //#define STEPS 100000000
 #define PERIOD 10000
-#define FRAMES STEPS/PERIOD
+//#define FRAMES STEPS/PERIOD
 //#define NX 101
 //#define NY 75
 //#define LEN NX*NY
