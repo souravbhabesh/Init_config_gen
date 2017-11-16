@@ -20,7 +20,7 @@ int main(int argc, char **argv)
   double slider_thermal=0;
 
    switch (argc){
-     case 6:
+     case 7:
        sscanf(argv[1],"%d",&NX);    
        sscanf(argv[2],"%d",&NY);
        sscanf(argv[3],"%lf",&KAPPA);
