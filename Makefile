@@ -22,5 +22,5 @@ main.o : $(DEPS) gsd.h gsd_read.h analyze.h main.cpp
 	$(CXX) $(CXXFLAGS) main.cpp
 
 clean:
-	\rm *.o *~ CLONE
+	rm *.o *~ CLONE
 

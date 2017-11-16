@@ -64,14 +64,15 @@ int main(int argc, char **argv)
 
   for(int run=1;run<=RUN;run++)
   {
-	frame_slider=0;
-	slider_node=0;
-	delta_pos=0;
-	shifted_frame_slider=0;
 	// Trajectory.gsd filepath
         sprintf(trajectory_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/traj.gsd",NX,NY,KAPPA,run);
     for(int k=0;k<=CLONE;k++)
     {
+	frame_slider=0;
+        slider_node=0;
+        delta_pos=0;
+        shifted_frame_slider=0;
+	
 	sprintf(thermalpos_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/thermalPosFrame.bin",NX,NY,KAPPA,run+10*k);
 	printf("thermalposition file : %s\n",thermalpos_file);
 	therm = fopen(thermalpos_file, "wb");
