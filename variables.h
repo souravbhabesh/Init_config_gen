@@ -1,20 +1,13 @@
-//#define KAPPA 5.0
-//#define STEPS 100000000
 #define PERIOD 10000
-//#define FRAMES STEPS/PERIOD
-//#define NX 101
-//#define NY 75
-//#define LEN NX*NY
 #define NMAX 50000
-//#define EPSILON 3600.0
+#define MAXPARTICLETYPE 10
 #define a 1.0
-//#define RUN 10
 
-extern int N,Nb,Nd,bondGroup[NMAX*2],dihedralGroup[NMAX*4];
+extern int N,Nb,Nd,bondGroup[NMAX*2],dihedralGroup[NMAX*4],CLONE;
 //N:#particles, Nb:#bonds, Nd:#dihedrals
 extern float position[NMAX*3];
 extern uint32_t particleID[NMAX];
-extern char particleType[3][2];
+extern char particleType[MAXPARTICLETYPE][2];
 //extern double bendingEner[NMAX];
 //extern double bondHarmonicEner[NMAX];
 //extern double total_DHE,total_BHE;

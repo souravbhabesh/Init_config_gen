@@ -8,6 +8,9 @@
 #include "gsd_read.h"
 #include "analyze.h"
 
+  int NX,NY,RUN;
+  double KAPPA;
+  int STEPS,FRAMES,CLONE;
 
 int main(int argc, char **argv)
 {
@@ -15,9 +18,6 @@ int main(int argc, char **argv)
   char init_strip[256],trajectory_file[256],thermalpos_file[256];
   int frame_cnt=0;
   double slider_thermal=0;
-  int NX,NY,RUN;
-  double KAPPA;
-  int STEPS,FRAMES;
 
    switch (argc){
      case 6:
@@ -25,10 +25,11 @@ int main(int argc, char **argv)
        sscanf(argv[2],"%d",&NY);
        sscanf(argv[3],"%lf",&KAPPA);
        sscanf(argv[4],"%d",&RUN);
-       sscanf(argv[5],"%d",&STEPS); 
+       sscanf(argv[5],"%d",&STEPS);
+       sscanf(argv[6],"%d",&CLONE); 
        break;
      default:
-       print_and_exit("Usage: %s NX NY KAPPA RUN STEPS\n",
+       print_and_exit("Usage: %s NX NY KAPPA RUN STEPS CLONE (generate multiple clamped files total 10(CLONE+1))\n",
            argv[0]);
    }
 
@@ -69,14 +70,16 @@ int main(int argc, char **argv)
 	shifted_frame_slider=0;
 	// Trajectory.gsd filepath
         sprintf(trajectory_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/traj.gsd",NX,NY,KAPPA,run);
-	sprintf(thermalpos_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/thermalPosFrame.bin",NX,NY,KAPPA,run);
+    for(int k=0;k<CLONE;k++)
+    {
+	sprintf(thermalpos_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/thermalPosFrame.bin",NX,NY,KAPPA,run+10*k);
 	printf("thermalposition file : %s\n",thermalpos_file);
 	therm = fopen(thermalpos_file, "wb");
 	if (therm == NULL)
    	{
         	print_and_exit("Could Not Open File to write thermalised position data");
    	}
-	load_gsd(trajectory_file,FRAMES-1);
+	load_gsd(trajectory_file,FRAMES-k-1);
 
         /*	Shifting frame left end to averaged thermalized position	*/
 	for(int i=0;i<N;i++)
@@ -91,7 +94,7 @@ int main(int argc, char **argv)
 	printf ("Slider position of frame %.8f\n",frame_slider);
 	delta_pos = slider_thermal - frame_slider;
 
-	/*	Shifting left end nodes to the thermal average 	*/
+	/*	Shifting right end nodes to the thermal average 	*/
 	slider_node=0;
 	for(int i=0;i<N;i++)
         {
@@ -108,9 +111,9 @@ int main(int argc, char **argv)
 	/* writing position data to binary file		*/
 	fwrite(position,sizeof(position),1,therm);
 	fclose(therm);	
+     }
+
   }
-
-
 
   return 0;
 }

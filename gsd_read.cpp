@@ -10,7 +10,7 @@
 int N,Nb,Nd,bondGroup[NMAX*2],dihedralGroup[NMAX*4];
 float position[NMAX*3];
 uint32_t particleID[NMAX];
-char particleType[3][2];
+char particleType[MAXPARTICLETYPE][2];
 
 void print_and_exit(char *format, ...)
 {
