@@ -8,8 +8,9 @@ for K in ${KAPPA[@]};
 do
   for R in {1..10};
   do
-                echo "**************************START SIMULATION LAUNCH***************************************"
+                echo "***********************MAKING FOLDER***************************************"
                 echo "NX $NX NY $NY Epsilon $E Kappa $K Run $R"
+		echo
 
                 L="../Sim_dump_ribbon/L${NX}"
                 #echo $L
@@ -31,6 +32,7 @@ do
                 fi
                 if [ ! -d "$run" ]; then
                         mkdir $run
+			echo $run
                 fi
     done
 done

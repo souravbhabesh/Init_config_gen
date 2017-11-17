@@ -51,9 +51,9 @@ int main(int argc, char **argv)
 		frame_cnt++;
 	}
   }
-  /*`	Average thermalised position of right end of the ribbon	*/
+  /*	Average thermalised position of right end of the ribbon	*/
   slider_thermal/=frame_cnt;
-  printf ("Thermal position of right end %.8g\n",slider_thermal);
+  printf ("Thermal position of right end %.8f\n",slider_thermal);
 
   
   /*	fixing last frame from each run at the thermalised position	*/
@@ -61,6 +61,7 @@ int main(int argc, char **argv)
   int slider_node=0;
   double delta_pos=0;
   double shifted_frame_slider=0;
+  int i;
 
   for(int run=1;run<=RUN;run++)
   {
@@ -82,8 +83,8 @@ int main(int argc, char **argv)
    	}
 	load_gsd(trajectory_file,FRAMES-k-1);
 
-        /*	Shifting frame left end to averaged thermalized position	*/
-	for(int i=0;i<N;i++)
+        /*	Slider position of the frame read above		*/
+	for(i=0;i<N;i++)
 	{
         	if(particleID[i]==3)
         	{
@@ -91,13 +92,13 @@ int main(int argc, char **argv)
                 	slider_node++;
         	}
    	}
-	frame_slider/=slider_node; /*	Average position of left end of the frame	*/
+	frame_slider/=slider_node; /*	Average position of right end of the frame	*/
 	printf ("Slider position of frame %.8f\n",frame_slider);
 	delta_pos = slider_thermal - frame_slider;
 
-	/*	Shifting right end nodes to the thermal average 	*/
+	/*	Shifting right end nodes to the thermalized position 	*/
 	slider_node=0;
-	for(int i=0;i<N;i++)
+	for(i=0;i<N;i++)
         {
                 if(particleID[i]==3)
                 {
@@ -107,10 +108,13 @@ int main(int argc, char **argv)
                 }
         }
 	shifted_frame_slider /= slider_node;
-	printf ("shifted Slider position of frame %.8f\n\n",shifted_frame_slider);
+	printf ("Frame slider clamped at %.8f shifted from %.8f to equilibrium position %.8f\n\n",shifted_frame_slider,frame_slider,slider_thermal);
 	
-	/* writing position data to binary file		*/
-	fwrite(position,sizeof(position),1,therm);
+	/* 	writing position data to binary file		*/
+	//	First line has number of nodes of the system
+	fwrite(&N,sizeof(int),1,therm);
+	fwrite(position,sizeof(double),N,therm);
+	//fwrite(position,sizeof(position),1,therm);
 	fclose(therm);	
      }
 
