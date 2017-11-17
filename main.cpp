@@ -14,8 +14,8 @@
 
 int main(int argc, char **argv)
 {
-  FILE *therm;
-  char init_strip[256],trajectory_file[256],thermalpos_file[256];
+  FILE *therm,*lat;
+  char init_strip[256],trajectory_file[256],thermalpos_file[256],lattice_file[256];
   int frame_cnt=0;
   double slider_thermal=0;
 
@@ -39,6 +39,7 @@ int main(int argc, char **argv)
   sprintf(init_strip,"../Sim_dump_ribbon/init_strip_L%d_W%d.gsd",NX,NY);
   printf("Init_strip.gsd : %s\n",init_strip);
   load_gsd(init_strip,0); 
+  printf("#bonds %d #dihedrals %d \n",Nb,Nd);
 
   for(int run=1;run<=RUN;run++)
   {
@@ -81,6 +82,16 @@ int main(int argc, char **argv)
    	{
         	print_and_exit("Could Not Open File to write thermalised position data");
    	}
+
+	sprintf(lattice_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/lattice_thermal.dat",NX,NY,KAPPA,run+10*k);
+        printf("Lattice file : %s\n",lattice_file);
+        lat = fopen(lattice_file, "w");
+        if (lat == NULL)
+        {
+                print_and_exit("Could Not Open File to write thermalised position data");
+        }
+
+
 	load_gsd(trajectory_file,FRAMES-k-1);
 
         /*	Slider position of the frame read above		*/
@@ -115,6 +126,34 @@ int main(int argc, char **argv)
 	fwrite(&N,sizeof(int),1,therm);
 	fwrite(position,sizeof(double),N,therm);
 	//fwrite(position,sizeof(position),1,therm);
+
+	/*	Writing lattice data to file	*/
+	/*   Total Particles         */
+	fprintf(lat,"%d\n",N);
+	/*   Particle Position in THERMALIZED configuration  */
+	for(i=0;i<N;i++)
+           {
+                fprintf(lat,"%.8f,%.8f,%.8f\n",position[3*i],position[3*i+1],position[3*i+2]);
+           }
+	/*   Printing the Bond pairs */
+	fprintf(lat,"%d\n",Nb);
+	for(i=0;i<Nb;i++)
+           {	
+		fprintf(lat,"%d,%d\n",bondGroup[2*i],bondGroup[2*i+1]);			
+	   }
+	/*   Printing the Dihedrals  */
+        fprintf(lat,"%d\n",Nd);
+	for(i=0;i<Nd;i++)
+	{
+		fprintf(lat,"%d,%d,%d,%d\n",dihedralGroup[4*i],dihedralGroup[4*i+1],dihedralGroup[4*i+2],dihedralGroup[4*i+3]);
+	}
+        /*   Printing particle type Ids      */
+	for(i=0;i<N;i++)
+	{
+		fprintf(lat,"%u\n",particleID[i]);	
+	}
+
+	fclose(lat);
 	fclose(therm);	
      }
 
