@@ -29,7 +29,7 @@ int main(int argc, char **argv)
        sscanf(argv[6],"%d",&CLONE); 
        break;
      default:
-       print_and_exit("Usage: %s NX NY KAPPA RUN STEPS CLONE (generate multiple clamped files total 10(CLONE+1))\n",
+       print_and_exit("Usage: %s NX NY KAPPA RUN STEPS CLONE (generate multiple clamped files total RUN*(CLONE+1))\n",
            argv[0]);
    }
 
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
         delta_pos=0;
         shifted_frame_slider=0;
 	
-	sprintf(thermalpos_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/thermalPosFrame.bin",NX,NY,KAPPA,run+10*k);
+	sprintf(thermalpos_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/thermalPosFrame.bin",NX,NY,KAPPA,run+RUN*k);
 	printf("thermalposition file : %s\n",thermalpos_file);
 	therm = fopen(thermalpos_file, "wb");
 	if (therm == NULL)
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
         	print_and_exit("Could Not Open File to write thermalised position data");
    	}
 
-	sprintf(lattice_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/lattice_thermal.dat",NX,NY,KAPPA,run+10*k);
+	sprintf(lattice_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/lattice_thermal.dat",NX,NY,KAPPA,run+RUN*k);
         printf("Lattice file : %s\n",lattice_file);
         lat = fopen(lattice_file, "w");
         if (lat == NULL)
