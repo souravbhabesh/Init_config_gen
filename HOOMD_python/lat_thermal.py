@@ -83,24 +83,23 @@ if len(sys.argv) < 6:
   print("NX %s [NX] " % sys.argv[2])
   print("NY %s [NY] " % sys.argv[3])
   print("KAPPA %s [KAPPA] " % sys.argv[4])
-  print("RUN %s [RUN] " % sys.argv[5])
+  print("RUNS %s [RUNS] " % sys.argv[5])
 #  print("Usage: python %s [input_file] " % sys.argv[1])
 #  print("Usage: python %s [output_file] " % sys.argv[2])
   exit()
 
+for r in range(1,int(sys.argv[5])+1):
+   # Parameters
+   L = float(sys.argv[1])
+   NX = sys.argv[2]
+   NY = sys.argv[3]
+   KAPPA = sys.argv[4]
+   RUN = sys.argv[5]
+   input_file = '../Sim_dump_ribbon/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+str(r)+'/lattice.dat'
+   output_file = '../Sim_dump_ribbon/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+str(r)+'/init_thermal.gsd'
 
-# Parameters
-L = float(sys.argv[1])
-NX = sys.argv[2]
-NY = sys.argv[3]
-KAPPA = sys.argv[4]
-RUN = sys.argv[5]
-input_file = '../Sim_dump_ribbon/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+RUN+'/lattice.dat'
-output_file = '../Sim_dump_ribbon/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+RUN+'/init_thermal.gsd'
+   # User output
+   print("Parameters: L NX NY KAPPA run#")
+   print(L,NX,NY,KAPPA,str(r))
 
-
-# User output
-print("Parameters:")
-print("    L = %4.2e" % (L))
-
-lattice(L,input_file,output_file)
+   lattice(L,input_file,output_file)
