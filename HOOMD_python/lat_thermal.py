@@ -95,8 +95,8 @@ for r in range(1,int(sys.argv[5])+1):
    NY = sys.argv[3]
    KAPPA = sys.argv[4]
    RUN = sys.argv[5]
-   input_file = '../../Sim_dump_ribbon/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+str(r)+'/lattice_thermal.dat'
-   output_file = '../../Sim_dump_ribbon/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+str(r)+'/init_thermal.gsd'
+   input_file = '../../Sim_dump_thermal/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+str(r)+'/lattice_thermal.dat'
+   output_file = '../../Sim_dump_thermal/L'+NX+'/W'+NY+'/k'+KAPPA+'/r'+str(r)+'/init_thermal.gsd'
 
    # User output
    print("Parameters: L NX NY KAPPA run#")
