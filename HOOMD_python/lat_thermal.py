@@ -58,7 +58,7 @@ def lattice(L,input_file,output_file):
      s.dihedrals.group.append((d1,d2,d3,d4)) 
 
   ptr = ptr+s.dihedrals.N+1
-  print((array[ptr]))
+  #print((array[ptr]))
   for i in range(s.particles.N):
      s.particles.typeid.append(int(array[ptr+i]))
   

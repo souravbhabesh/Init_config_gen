@@ -45,7 +45,7 @@ int main(int argc, char **argv)
   {
 	// Trajectory.gsd filepath
 	sprintf(trajectory_file,"../Sim_dump_ribbon/L%d/W%d/k%.1f/r%d/traj.gsd",NX,NY,KAPPA,run);
-	for(int frames=FRAMES/2;frames<FRAMES;frames++)
+	for(int frames=FRAMES/2;frames<=FRAMES;frames++)
 	{
 		load_gsd(trajectory_file,frames);
 		slider_thermal+=avg_slider_pos();
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
   }
   /*	Average thermalised position of right end of the ribbon	*/
   slider_thermal/=frame_cnt;
-  printf ("Thermal position of right end %.8f\n",slider_thermal);
+  printf ("Thermalized position of right end %.8f\n",slider_thermal);
 
   
   /*	fixing last frame from each run at the thermalised position	*/

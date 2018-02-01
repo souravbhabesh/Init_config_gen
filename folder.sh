@@ -1,13 +1,15 @@
 #!/bin/bash
-NX=81
-NY=37
+NX=61
+W=(81 91 101);
 KAPPA=(5.0);
 #RUN=(for number in {1..10}; do echo -ne "$number " done); # to make different runs you can toggle the run number
 
-for K in ${KAPPA[@]};
-do
-  for R in {1..20};
+for NY in ${W[@]};
+do 
+  for K in ${KAPPA[@]};
   do
+    for R in {1..50};
+    do
                 echo "***********************MAKING FOLDER***************************************"
                 echo "NX $NX NY $NY Epsilon $E Kappa $K Run $R"
 		echo
@@ -34,5 +36,6 @@ do
                         mkdir $run
 			echo $run
                 fi
+	done
     done
 done
